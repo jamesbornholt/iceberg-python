@@ -1026,7 +1026,9 @@ class MetastoreCatalog(Catalog, ABC):
 
     @staticmethod
     def _write_metadata(metadata: TableMetadata, io: FileIO, metadata_path: str) -> None:
-        ToOutputFile.table_metadata(metadata, io.new_output(metadata_path))
+        # Use overwrite to avoid negative caching in S3. This is safe because the metadata
+        # location is always unique because it includes a UUID.
+        ToOutputFile.table_metadata(metadata, io.new_output(metadata_path), overwrite=True)
 
     @staticmethod
     def _parse_metadata_version(metadata_location: str) -> int:
