@@ -302,7 +302,7 @@ class ListNamespaceResponse(IcebergBaseModel):
 
 class NamespaceResponse(IcebergBaseModel):
     namespace: Identifier = Field()
-    properties: Properties = Field()
+    properties: Properties = Field(default_factory=dict)
 
 
 class UpdateNamespacePropertiesResponse(IcebergBaseModel):
